@@ -20,6 +20,152 @@ const MINI_HEADER_TEMPLATE = `
 </div>
 `;
 
+const MINI_HEADER_STYLE_ELEMENT_ID = 'genipedia-mini-header-styles';
+const MINI_HEADER_STYLES = String.raw`
+mini-header .central-textlogo-wrapper {
+  display: inline-block;
+  font-size: inherit;
+  vertical-align: bottom;
+}
+
+mini-header .central-textlogo {
+  position: relative;
+  margin: 4rem auto .5rem;
+  width: 320px;
+  font-family: Linux Libertine, Hoefler Text, Georgia, Times New Roman, Times, serif;
+  font-size: 3.6rem;
+  font-weight: 400;
+  line-height: 3.9rem;
+  text-align: center;
+  font-feature-settings: "ss05";
+}
+
+mini-header .localized-slogan {
+  display: block;
+  margin-top: -0.2rem;
+  font-family: var(--font-family-serif, Linux Libertine, Hoefler Text, Georgia, Times New Roman, Times, serif);
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
+mini-header .central-textlogo__wordmark {
+  display: inline-block;
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.1;
+  vertical-align: middle;
+}
+
+mini-header .central-textlogo__wordmark-accent {
+  display: inline-block;
+  font-size: 1.42em;
+  line-height: 0.84;
+  vertical-align: baseline;
+}
+
+mini-header .central-textlogo__logo {
+  display: none;
+}
+
+mini-header .central-textlogo__home-link {
+  color: inherit;
+  text-decoration: none;
+  display: inline-block;
+}
+
+mini-header .central-textlogo__home-link:hover,
+mini-header .central-textlogo__home-link:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+mini-header .central-textlogo__home-link:focus {
+  outline: 2px solid var(--color-progressive, #36c);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+body:not(.theme-dark) mini-header .central-textlogo {
+  color: #111 !important;
+}
+
+body:not(.theme-dark) mini-header .central-textlogo__home-link {
+  color: inherit !important;
+}
+
+body:not(.theme-dark) mini-header .central-textlogo .localized-slogan {
+  color: #333 !important;
+  opacity: 0.95;
+}
+
+body:not(.theme-dark) mini-header .central-textlogo__logo {
+  filter: invert(1) grayscale(0.02) contrast(0.95);
+}
+
+@media (max-width:480px) {
+  mini-header {
+    display: block;
+    width: 100%;
+  }
+
+  mini-header .central-textlogo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    width: fit-content;
+    max-width: calc(100% - 2rem);
+    height: auto;
+    min-height: 84px;
+    margin: 2rem auto 0;
+    padding: 0 1rem;
+    text-align: left;
+    line-height: 3rem;
+    text-indent: 0;
+    font-size: 1.45em;
+  }
+
+  mini-header .central-textlogo__logo {
+    display: block;
+    width: auto;
+    height: 6rem;
+    flex-shrink: 0;
+  }
+
+  mini-header .central-textlogo-wrapper {
+    position: static;
+    top: auto;
+    text-indent: 0;
+    text-align: left;
+    margin: 0;
+    min-width: 0;
+  }
+
+  mini-header .localized-slogan {
+    font-size: 1.55rem;
+    text-align: left;
+  }
+}
+
+@media (max-width:240px) {
+  mini-header .central-textlogo__wordmark {
+    height: auto;
+  }
+}
+`;
+
+function ensureMiniHeaderStyles() {
+  if (document.getElementById(MINI_HEADER_STYLE_ELEMENT_ID)) {
+    return;
+  }
+
+  const styleElement = document.createElement('style');
+  styleElement.id = MINI_HEADER_STYLE_ELEMENT_ID;
+  styleElement.textContent = MINI_HEADER_STYLES;
+  document.head.appendChild(styleElement);
+}
+
 const FULL_SLOGAN = 'The Free Geneology Encyclopedia';
 const SHORT_SLOGAN = 'Free Geneology Encyclopedia';
 
@@ -96,6 +242,7 @@ class MiniHeader extends HTMLElement {
   connectedCallback() {
     if (this.__rendered) return;
     this.__rendered = true;
+    ensureMiniHeaderStyles();
     this.innerHTML = MINI_HEADER_TEMPLATE;
 
     const logo = this.querySelector('.central-textlogo__logo');
