@@ -100,7 +100,7 @@ body {
 }
 
 /* Appearance section spacing inside the dropdown */
-#vector-appearance .mw-portlet + .mw-portlet {
+#vector-appearance .mw-portlet+.mw-portlet {
     margin-top: 12px !important;
     padding-top: 12px !important;
     border-top: 1px solid var(--vector-border, rgba(255, 255, 255, 0.08)) !important;
@@ -124,9 +124,9 @@ body {
 }
 
 /* Footer sits below .mw-page-container-inner (see full-footer.js). */
-.mw-page-container > full-footer,
-.mw-page-container > full-footer .mw-footer-container,
-.mw-page-container > full-footer .mw-footer {
+.mw-page-container>full-footer,
+.mw-page-container>full-footer .mw-footer-container,
+.mw-page-container>full-footer .mw-footer {
     width: 100%;
     max-width: none;
 }
